@@ -6,24 +6,24 @@ import java.math.BigDecimal
 
 class Estoque : Item() {
     private val listaItem = mutableSetOf<Item>()
-
     fun registrarItem() {
         try {
 
             println("Digite o código do produto: ")
-            var codigo = readln().toInt()
+            codigo = readln().toInt()
             if (codigo < 0) {
                 println("Números negativos não aceitos, digite novamente.")
                 codigo = readln().toInt()
             }
             println("Digite o nome do produto: ")
-            var nomeItem = readln()
+            val nomeItem = readln()
             println("Digite o preco do produto: ")
             var preco = readln().toBigDecimal()
             if (preco < BigDecimal.ZERO) {
                 println("Números negativos e inteiros não aceitos, digite novamente.")
                 preco = readln().toBigDecimal()
             }
+
             val item = Item(codigo = codigo, nomeItem = nomeItem, preco = preco)
             listaItem.add(item);
             println("Item registrado com sucesso\n")
@@ -37,12 +37,19 @@ class Estoque : Item() {
     fun verificarItens() {
         println("Informe o nº do código:")
         val codigoItemAtual = readln().toInt()
+        var temItem: Boolean
         listaItem.forEach {
             when (codigoItemAtual == it.codigo) {
-                true -> println("Item já cadastrado !!")
-                else -> println("item não cadastrado!!")
+                true -> {
+                    temItem = true
+                    println("Código indisponível, produtos já cadastrado = ${it.codigo} $temItem")
+                } else -> temItem = false
             }
         }
+            when(codigoItemAtual != codigo) {
+                true -> println("Produto não cadastrado")
+                else -> temItem = true
+            }
 
     }
 
@@ -69,4 +76,10 @@ class Estoque : Item() {
             break
         }
     }
+
 }
+
+
+
+
+
